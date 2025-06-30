@@ -172,7 +172,7 @@ export const AdminDashboard: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">管理员控制台</h1>
+          <h1 className="text-2xl font-bold text-gray-900">AYI云聚控制台</h1>
           <p className="text-gray-600 mt-1">密钥管理与使用监控</p>
         </div>
         <Space>
