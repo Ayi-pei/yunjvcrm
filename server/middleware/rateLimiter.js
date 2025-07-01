@@ -46,3 +46,5 @@ export const loginRateLimiterMiddleware = async (req, res, next) => {
 };
 
 export { rateLimiterMiddleware as rateLimiter };
+
+export { rateLimiter }
