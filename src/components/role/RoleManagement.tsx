@@ -1,9 +1,85 @@
 import React, { useState } from 'react';
-import { Card, Table, Button, Space, Tag, Modal, Form, Input, ColorPicker, message, Popconfirm } from 'antd';
+import { Card, Table, Button, Space, Tag, Modal, Form, Input, ColorPicker, message, Popconfirm, Tree, Checkbox } from 'antd';
 import { Plus, Edit, Trash2, Shield } from 'lucide-react';
-import { ROLES } from '../../constants/roles';
-import { Role } from '../../types';
+import { ROLES, PERMISSIONS } from '../../constants/roles';
+import { Role, Permission } from '../../types';
 import { PermissionGuard } from '../common/PermissionGuard';
+
+// 权限树组件
+const PermissionTree: React.FC<{
+  selectedRole: Role | null;
+  onRoleUpdate: (role: Role) => void;
+}> = ({ selectedRole, onRoleUpdate }) => {
+  if (!selectedRole) return null;
+
+  // 按分类组织权限
+  const permissionsByCategory = PERMISSIONS.reduce((acc, permission) => {
+    if (!acc[permission.category]) {
+      acc[permission.category] = [];
+    }
+    acc[permission.category].push(permission);
+    return acc;
+  }, {} as Record<string, Permission[]>);
+
+  const handlePermissionChange = (permissionId: string, checked: boolean) => {
+    const updatedPermissions = checked
+      ? [...selectedRole.permissions, PERMISSIONS.find(p => p.id === permissionId)!]
+      : selectedRole.permissions.filter(p => p.id !== permissionId);
+
+    onRoleUpdate({
+      ...selectedRole,
+      permissions: updatedPermissions
+    });
+  };
+
+  const categoryNames = {
+    chat: '聊天功能',
+    data: '数据权限',
+    management: '管理功能',
+    system: '系统配置',
+    quality: '质量检查',
+    training: '培训功能'
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="text-sm text-gray-600 mb-4">
+        为角色 <strong>{selectedRole.displayName}</strong> 配置权限
+      </div>
+      
+      {Object.entries(permissionsByCategory).map(([category, permissions]) => (
+        <div key={category} className="border rounded-lg p-4">
+          <h4 className="font-medium text-gray-900 mb-3">
+            {categoryNames[category as keyof typeof categoryNames] || category}
+          </h4>
+          <div className="space-y-2">
+            {permissions.map(permission => (
+              <div key={permission.id} className="flex items-center space-x-3">
+                <Checkbox
+                  checked={selectedRole.permissions.some(p => p.id === permission.id)}
+                  onChange={(e) => handlePermissionChange(permission.id, e.target.checked)}
+                />
+                <div className="flex-1">
+                  <div className="font-medium text-sm">{permission.displayName}</div>
+                  <div className="text-xs text-gray-500">{permission.description}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+      
+      <div className="flex justify-end space-x-2 pt-4 border-t">
+        <Button
+          type="primary"
+          onClick={() => message.success('权限配置已保存')}
+        >
+          保存配置
+        </Button>
+      </div>
+    </div>
+  );
+};
 
 export const RoleManagement: React.FC = () => {
   const [roles, setRoles] = useState<Role[]>(ROLES);
