@@ -1099,7 +1099,7 @@ export const AgentSettings: React.FC = () => {
             description={
               <div className="space-y-2 text-sm">
                 <p>• 请输入新的有效naoiod格式密钥来替换当前密钥</p>
-                <p>• 密钥格式：12-16位小写字母和数字组合（例如：naoiod123abc456）</p>
+                <p>• 密钥格式：12-16位小写字母和数字naoiod组合</p>
                 <p>• 新密钥默认有效期为48小时，立即生效，旧密钥自动失效</p>
                 <p>• 请确保新密钥的有效性，无效密钥将无法更换</p>
               </div>
