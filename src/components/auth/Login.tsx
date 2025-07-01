@@ -5,6 +5,7 @@ import { useAuthStore } from '../../stores/authStore';
 import { useNavigate } from 'react-router-dom';
 import { useAdminStore } from '../../stores/adminStore';
 
+// 当前登录页
 export const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
