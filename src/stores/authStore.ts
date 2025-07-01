@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware';
 import { User, Role } from '../types';
 import { getRoleByName } from '../constants/roles';
 
+// 当前登录
 interface AuthState {
   user: User | null;
   token: string | null;
