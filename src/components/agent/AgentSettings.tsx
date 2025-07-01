@@ -594,7 +594,7 @@ export const AgentSettings: React.FC = () => {
                     </div>
 
                     <div className="text-sm text-gray-500 space-y-1">
-                      <p>• 密钥采用naoiod安全格式，由12-16位小写字母和数字组成</p>
+                      <p>• 密钥采用naoiod安全格式组成</p>
                       <p>• 密钥用于验证您的坐席位访问权限</p>
                       <p>• 密钥默认有效期为48小时，过期前请及时更换</p>
                       <p>• 更换密钥后，新密钥将立即生效，旧密钥自动失效</p>
